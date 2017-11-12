@@ -8,3 +8,10 @@ UUID=E033-1109 /mnt/usb vfat auto,users,rw,uid=1000,gid=100,umask=0002 0 0
 
 Add this to crontab:
 */5 * * * *   /home/pi/kiosk/cron_script.sh
+
+To hide toolbar on desktop:
+sudo nano /home/pi/.config/lxpanel/LXDE-pi/panels/panel
+then set:
+edge=bottom
+autohide=1
+heightwhenhidden=0
