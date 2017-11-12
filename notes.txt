@@ -13,5 +13,6 @@ To hide toolbar on desktop:
 sudo nano /home/pi/.config/lxpanel/LXDE-pi/panels/panel
 then set:
 edge=bottom
+height=0
 autohide=1
 heightwhenhidden=0
