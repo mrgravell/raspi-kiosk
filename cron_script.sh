@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# we'll need this at some point
+#
+# feh --hide-pointer -x -q -D 5 -B black -g 320x240 /path/to/pictures
+#
+
 cd /home/pi/kiosk
 #delete bs dot files and system volume information
 #rm /home/pi/kiosk/usb_clone/.??*
