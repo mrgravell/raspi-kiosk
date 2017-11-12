@@ -1,8 +1,9 @@
 #!/bin/bash
 
 cd /home/pi/kiosk
-#delete bs dot files from both
-rm /home/pi/kiosk/usb_clone/.??*
+#delete bs dot files and system volume information
+#rm /home/pi/kiosk/usb_clone/.??*
+rm -r /mnt/usb/System\ Volume\ Information
 rm -r /mnt/usb/.??*
 #check if usb contains files
 files=$(shopt -s nullglob dotglob; echo /mnt/usb/*)
@@ -36,7 +37,7 @@ esac
     pkill omxplayer.bin
     pkill play_script.sh
     #sync the local directory to the usb. delete local files if deleted from usb.
-    rsync -r -v --delete /mnt/usb/ /home/pi/kiosk/usb_clone
+    rsync -r -v --exclude '.gitignore' --delete /mnt/usb/ /home/pi/kiosk/usb_clone
     #now start the play script
     echo "starting play script"
     ./play_script.sh
