@@ -1,0 +1,8 @@
+omx player came already installed
+
+apt-get install feh (to show images)
+
+auto mount usb by editing /etc/fstab
+
+Ad this line (change UUID):
+UUID=E033-1109 /mnt/usb vfat auto,users,rw,uid=1000,gid=100,umask=0002 0 0

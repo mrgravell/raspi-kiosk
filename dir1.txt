@@ -1,0 +1,6 @@
+/mnt/usb/img1.png
+/mnt/usb/img2.png
+/mnt/usb/System Volume Information/IndexerVolumeGuid
+/mnt/usb/System Volume Information/WPSettings.dat
+/mnt/usb/v1.mp4
+/mnt/usb/v2.MOV

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+cd /home/pi/kiosk
+#delete bs dot files from both
+rm /home/pi/kiosk/usb_clone/.??*
+rm -r /mnt/usb/.??*
+#check if usb contains files
+files=$(shopt -s nullglob dotglob; echo /mnt/usb/*)
+if (( ${#files} ))
+then
+  echo "contains files"
+  #check for diff
+  OUTPUT1="$(diff -r /mnt/usb/ /home/pi/kiosk/usb_clone/ | grep /mnt/usb/ | awk '{print $4}')"
+  OUTPUT2="$(diff -r /home/pi/kiosk/usb_clone/ /mnt/usb/ | grep /home/pi/kiosk/usb_clone/ | awk '{print $4}')"
+  OUTPUT=${OUTPUT1}${OUTPUT2}
+  if [[ -z "${OUTPUT// }" ]] || [[ -z "${OUTPUT// }" ]]
+  then
+    echo "no changes"
+
+  SC_CODE="$(pidof play_script.sh | wc -w)"
+  OM_CODE="$(pidof omxplayer.bin | wc -w)"
+  CODE=$((${SC_CODE}+${OM_CODE}))
+  echo "code is ${CODE}"
+case ${CODE} in
+
+0)  echo "Starting Script:"
+    ./play_script.sh
+    ;;
+1)  echo "play_script.sh already running"
+    ;;
+esac
+
+  else
+    #first stop the play script if it is running
+    echo "trying to kill play_script.sh and omxplayer"
+    pkill omxplayer.bin
+    pkill play_script.sh
+    #sync the local directory to the usb. delete local files if deleted from usb.
+    rsync -r -v --delete /mnt/usb/ /home/pi/kiosk/usb_clone
+    #now start the play script
+    echo "starting play script"
+    ./play_script.sh
+  fi
+else
+  echo "usb empty or unplugged"
+fi
