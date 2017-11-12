@@ -5,6 +5,9 @@
 # feh --hide-pointer -x -q -D 5 -B black -g 320x240 /path/to/pictures
 #
 
+#blank the screen
+export DISPLAY=:0 ; xset s activate
+
 cd /home/pi/kiosk
 #delete bs dot files and system volume information
 #rm /home/pi/kiosk/usb_clone/.??*
@@ -39,12 +42,18 @@ esac
   else
     #first stop the play script if it is running
     echo "trying to kill play_script.sh and omxplayer"
+    pkill feh
     pkill omxplayer.bin
     pkill play_script.sh
+    echo "disable screensaver, show waiting image and continue execution"
+    export DISPLAY=:0 ; xset s reset
+    export DISPLAY=:0 ; feh --hide-pointer -x /home/pi/kiosk/loading.jpg &
     #sync the local directory to the usb. delete local files if deleted from usb.
     rsync -r -v --exclude '.gitignore' --delete /mnt/usb/ /home/pi/kiosk/usb_clone
     #now start the play script
-    echo "starting play script"
+    echo "enable screensaver, start play script"
+    export DISPLAY=:0 ; xset s activate
+    pkill feh
     ./play_script.sh
   fi
 else
