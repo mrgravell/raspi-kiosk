@@ -10,7 +10,7 @@ echo "s activate"
 xset s activate
 
 #nb 2 seconds get added to this
-IMG_TIME='6'
+IMG_TIME='8'
 
 THIS_PATH='/home/pi/kiosk'
 USB_PATH='/mnt/usb'
