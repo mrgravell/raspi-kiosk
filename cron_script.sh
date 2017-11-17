@@ -83,7 +83,8 @@ fi
 if [[ $ext = 'jpg' || $ext = 'jpeg' || $ext = 'png' ]]
 then
   echo "trying to show image"
-  feh --hide-pointer --full-screen $f &
+#  feh --hide-pointer --full-screen --zoom fill -g 1820x720 $f &
+  feh --hide-pointer --full-screen --zoom fill $f &
   sleep 1
   echo "s reset"
   xset s reset
