@@ -1,4 +1,6 @@
 #!/bin/bash
+#wait for pi to wake up?
+sleep 40
 
 #require a screen
 export DISPLAY=:0
@@ -75,8 +77,6 @@ do
 if [[ $ext = 'mov' || $ext = 'mp4' ]]
 then
  #just in case first one didn't register at startup
- echo "s activate"
- xset s activate
  echo "trying to play"
  omxplayer $f
 fi
