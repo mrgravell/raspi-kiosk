@@ -62,7 +62,7 @@ else
   echo "usb empty or unplugged"
 fi
 
-#now loop thorugh each
+#now loop through each
 echo "enter play loop now"
 FILES=${CLONE_PATH}/*
 for f in $FILES
@@ -74,6 +74,9 @@ do
   echo $ext
 if [[ $ext = 'mov' || $ext = 'mp4' ]]
 then
+ #just in case first one didn't register at startup
+ echo "s activate"
+ xset s activate
  echo "trying to play"
  omxplayer $f
 fi
