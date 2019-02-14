@@ -77,13 +77,13 @@ do
   #convert to lowercase
   ext="${ext,,}"
   echo $ext
-if [[ $ext = 'mov' || $ext = 'mp4'  || $ext = 'MOV'  || $ext = 'MP4']]
+if [[ $ext = 'mov' || $ext = 'mp4'  || $ext = 'MOV'  || $ext = 'MP4' ]]
 then
  #just in case first one didn't register at startup
  echo "trying to play"
  omxplayer $f
 fi
-if [[ $ext = 'jpg' || $ext = 'jpeg' || $ext = 'png'  || $ext = 'JPG'  || $ext = 'JPEG'  || $ext = 'PNG']]
+if [[ $ext = 'jpg' || $ext = 'jpeg' || $ext = 'png'  || $ext = 'JPG'  || $ext = 'JPEG'  || $ext = 'PNG' ]]
 then
   echo "trying to show image"
 #  feh --hide-pointer --full-screen --zoom fill -g 1820x720 $f &
