@@ -10,7 +10,7 @@ echo "s activate"
 xset s activate
 
 #nb 2 seconds get added to this
-IMG_TIME='18'
+IMG_TIME='22'
 
 THIS_PATH='/home/pi/kiosk'
 USB_PATH='/mnt/usb'
@@ -33,14 +33,14 @@ do
 if [[ $ext = 'mov' || $ext = 'mp4'  || $ext = 'MOV'  || $ext = 'MP4' ]]
 then
  #just in case first one didn't register at startup
- echo "trying to play"
- omxplayer "${f}"
+ echo "trying to play video $f"
+ omxplayer $f
 fi
 if [[ $ext = 'jpg' || $ext = 'jpeg' || $ext = 'png'  || $ext = 'JPG'  || $ext = 'JPEG'  || $ext = 'PNG' ]]
 then
-  echo "trying to show image"
+  echo "trying to show image $f"
 #  feh --hide-pointer --full-screen --zoom fill -g 1820x720 $f &
-  feh --hide-pointer --full-screen --zoom fill "{$f}" &
+  feh --hide-pointer --full-screen --zoom fill $f &
   sleep 1
   echo "s reset"
   xset s reset
