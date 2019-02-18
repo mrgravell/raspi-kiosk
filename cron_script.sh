@@ -10,69 +10,22 @@ echo "s activate"
 xset s activate
 
 #nb 2 seconds get added to this
-IMG_TIME='13'
+IMG_TIME='18'
 
 THIS_PATH='/home/pi/kiosk'
 USB_PATH='/mnt/usb'
-CLONE_PATH='/home/pi/kiosk/usb_clone'
+CLONE_PATH='/home/pi/kiosk/google_drive'
 
 #begin infinite loop
 while true
 do
-
-#check if usb contains files
-files=$(shopt -s nullglob dotglob; echo ${USB_PATH}/*)
-if (( ${#files} ))
-then
-  echo "contains files"
-
-  #hide screensaver and show loadings image
-  echo "s reset"
-  xset s reset
-  feh --hide-pointer -x ${THIS_PATH}/loading.jpg &
-
-  #clear out crap from usb so we don't have to copy it
-  echo "deleting crap from usb"
-#  rm -r ${USB_PATH}/System\ Volume\ Information
-#  rm -r ${USB_PATH}/.??*
-
-  #check for diff
-  echo "check for differences ignoring .gitignore"
-  OUTPUT1="$(diff -r -x '.gitignore' ${USB_PATH}/ ${CLONE_PATH}/ | grep ${USB_PATH}/ | awk '{print $4}')"
-  OUTPUT2="$(diff -r -x '.gitignore' ${CLONE_PATH}/ ${USB_PATH}/ | grep ${CLONE_PATH}/ | awk '{print $4}')"
-  OUTPUT=${OUTPUT1}${OUTPUT2}
-  if [[ -z "${OUTPUT// }" ]] || [[ -z "${OUTPUT// }" ]]
-  then
-    echo "no differences"
-  else
-    echo "got differences"
-    #sync the local directory to the usb. delete local files if deleted from usb.
-    echo "syncing usb to local folder"
-    rsync -r -v --exclude '.gitignore' --delete ${USB_PATH}/ ${CLONE_PATH}
-  fi
-
-  #wait for usb - should use a better method for this
-  sleep 20s
-
-  #unmount the usb - no longer needed
-  echo "unmounting usb"
-  umount ${USB_PATH}
-
-  #reactivate screensaver & kill loading image
-  echo "s activate"
-  xset s activate
-  pkill feh
-
-else
-  echo "usb empty or unplugged"
-fi
 
 #now loop through each
 echo "enter play loop now"
 FILES=${CLONE_PATH}/*
 for f in $FILES
 do
-  #get extrnsion
+  #get extension
   ext="${f##*.}"
   #convert to lowercase
   ext="${ext,,}"
@@ -81,13 +34,13 @@ if [[ $ext = 'mov' || $ext = 'mp4'  || $ext = 'MOV'  || $ext = 'MP4' ]]
 then
  #just in case first one didn't register at startup
  echo "trying to play"
- omxplayer $f
+ omxplayer "${f}"
 fi
 if [[ $ext = 'jpg' || $ext = 'jpeg' || $ext = 'png'  || $ext = 'JPG'  || $ext = 'JPEG'  || $ext = 'PNG' ]]
 then
   echo "trying to show image"
 #  feh --hide-pointer --full-screen --zoom fill -g 1820x720 $f &
-  feh --hide-pointer --full-screen --zoom fill $f &
+  feh --hide-pointer --full-screen --zoom fill "{$f}" &
   sleep 1
   echo "s reset"
   xset s reset
